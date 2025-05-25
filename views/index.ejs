@@ -1,0 +1,53 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enoch's Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <header class="bg-white shadow-md">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-indigo-600">Enoch's Store</h1>
+        <nav class="space-x-4">
+          <a href="/" class="text-gray-600 hover:text-indigo-600">Home</a>
+          <a href="/admin" class="text-gray-600 hover:text-indigo-600">Admin</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="bg-indigo-600 text-white text-center py-16">
+      <h2 class="text-4xl font-bold mb-4">Welcome to Enoch's Store</h2>
+      <p class="text-lg">Shop the best products, updated daily.</p>
+    </section>
+
+    <!-- Product Grid -->
+    <main class="max-w-6xl mx-auto py-12 px-4">
+      <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <% products.forEach(product => { %>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <% if (product.image) { %>
+              <img src="<%= product.image %>" class="w-full h-48 object-cover" />
+            <% } else { %>
+              <div class="w-full h-48 bg-gray-200 flex items-center justify-center">No Image</div>
+            <% } %>
+            <div class="p-4">
+              <h3 class="text-xl font-semibold mb-2"><%= product.name %></h3>
+              <p class="text-gray-600">$<%= product.price %></p>
+              <p class="text-sm text-gray-500 mt-2"><%= product.description %></p>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4">
+      <p>&copy; <%= new Date().getFullYear() %> Enoch's Store. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

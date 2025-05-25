@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Product</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Add a New Product 🛠️</h1>
+  <form action="/admin/add" method="POST">
+    <label>Product Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Price ($):</label><br>
+    <input type="number" name="price" step="0.01" required><br><br>
+
+    <label>Description:</label><br>
+    <textarea name="description" required></textarea><br><br>
+
+    <label>Image URL (optional):</label><br>
+    <input type="file" name="image"><br><br>
+
+    <button type="submit">✅ Add Product</button>
+  </form>
+  <br>
+  <a href="/admin">← Back to Dashboard</a>
+</body>
+</html>
