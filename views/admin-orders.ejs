@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Orders - Enoch's Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen flex flex-col">
+  <header class="bg-indigo-600 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Admin - Orders</h1>
+      <nav>
+        <a href="/admin/products" class="hover:underline">Products</a>
+        <a href="/admin/orders" class="ml-4 underline">Orders</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto py-12 px-4 flex-grow">
+    <% if (orders.length === 0) { %>
+      <p class="text-center text-gray-600 text-lg">No orders found.</p>
+    <% } else { %>
+      <div class="space-y-8">
+        <% orders.forEach(order => { %>
+          <div class="bg-white rounded shadow p-6">
+            <h2 class="text-lg font-semibold mb-4">Order #<%= order.id %> - <%= new Date(order.createdAt).toLocaleDateString() %></h2>
+            <p class="mb-2"><strong>User:</strong> <%= order.user.email %></p>
+            <ul class="divide-y divide-gray-300 mb-4">
+              <% order.items.forEach(item => { %>
+                <li class="py-2 flex justify-between">
+                  <span><%= item.product.name %> x <%= item.quantity %></span>
+                  <span>$<%= (item.product.price * item.quantity).toFixed(2) %></span>
+                </li>
+              <% }) %>
+            </ul>
+            <p class="font-bold text-right">Total: $<%= order.total.toFixed(2) %></p>
+            <p class="mt-2 text-gray-600 text-right">Status: <%= order.status %></p>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </main>
+</body>
+</html>

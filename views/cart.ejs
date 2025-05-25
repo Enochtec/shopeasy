@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Cart - Enoch's Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen flex flex-col">
+  <header class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-indigo-600">Your Cart</h1>
+      <nav>
+        <a href="/" class="text-gray-600 hover:text-indigo-600">Continue Shopping</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto py-12 px-4 flex-grow">
+    <% if (cartItems.length === 0) { %>
+      <p class="text-center text-gray-600 text-lg">Your cart is empty.</p>
+      <div class="text-center mt-6">
+        <a href="/" class="text-indigo-600 hover:underline">Go Shopping</a>
+      </div>
+    <% } else { %>
+      <form action="/cart/update" method="POST" class="space-y-6">
+        <table class="min-w-full bg-white rounded shadow overflow-hidden">
+          <thead class="bg-indigo-600 text-white">
+            <tr>
+              <th class="px-6 py-3 text-left">Product</th>
+              <th class="px-6 py-3 text-left">Price</th>
+              <th class="px-6 py-3 text-left">Quantity</th>
+              <th class="px-6 py-3 text-left">Subtotal</th>
+              <th class="px-6 py-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cartItems.forEach(item => { %>
+              <tr class="border-b">
+                <td class="px-6 py-4 flex items-center gap-4">
+                  <% if (item.product.image) { %>
+                    <img src="<%= item.product.image %>" alt="<%= item.product.name %>" class="w-16 h-16 object-cover rounded" />
+                  <% } else { %>
+                    <div class="w-16 h-16 bg-gray-200 flex items-center justify-center rounded">No Image</div>
+                  <% } %>
+                  <span><%= item.product.name %></span>
+                </td>
+                <td class="px-6 py-4">$<%= item.product.price.toFixed(2) %></td>
+                <td class="px-6 py-4">
+                  <input
+                    type="number"
+                    name="quantities[<%= item.product.id %>]"
+                    value="<%= item.quantity %>"
+                    min="1"
+                    class="w-20 border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    required
+                  />
+                </td>
+                <td class="px-6 py-4">$<%= (item.product.price * item.quantity).toFixed(2) %></td>
+                <td class="px-6 py-4">
+                  <a href="/cart/remove/<%= item.product.id %>" class="text-red-600 hover:underline">Remove</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+
+        <div class="mt-6 flex justify-between items-center">
+          <p class="text-xl font-semibold">Total: $<%= cartTotal.toFixed(2) %></p>
+          <div class="space-x-4">
+            <button
+              type="submit"
+              class="bg-indigo-600 text-white px-6 py-3 rounded hover:bg-indigo-700 transition"
+            >
+              Update Cart
+            </button>
+            <a href="/checkout" class="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition">
+              Proceed to Checkout
+            </a>
+          </div>
+        </div>
+      </form>
+    <% } %>
+  </main>
+</body>
+</html>
